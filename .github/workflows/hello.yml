@@ -19,18 +19,18 @@ jobs:
       # ────────────────────────────────────────────────
       #  CACHING STEP - THIS IS WHAT THE QUESTION WANTS
       # ────────────────────────────────────────────────
-      - name: prime-cache-570eb9b
+      - name: prime-cache-570e3b9
         id: cache
         uses: actions/cache@v4
         with:
-          key: cache-570eb9b
+          key: cache-570e3b9
           path: |
             ~/.npm
             node_modules
             ~/.cache/pip
             **/node_modules
           restore-keys: |
-            cache-570eb9b-
+            cache-570e3b9-
 
       - name: Show cache hit/miss result
         run: |
