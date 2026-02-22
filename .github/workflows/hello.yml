@@ -1,9 +1,9 @@
-name: Simple Test Workflow with Email Step
+name: Simple Test Workflow with Email Step and Caching
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:   # Allows manual trigger from Actions tab
+  workflow_dispatch:   # Allows manual trigger
 
 jobs:
   test:
@@ -16,8 +16,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # ────────────────────────────────────────────────
+      #  CACHING STEP - THIS IS WHAT THE QUESTION WANTS
+      # ────────────────────────────────────────────────
+      - name: prime-cache-570eb9b
+        id: cache
+        uses: actions/cache@v4
+        with:
+          key: cache-570eb9b
+          path: |
+            ~/.npm
+            node_modules
+            ~/.cache/pip
+            **/node_modules
+          restore-keys: |
+            cache-570eb9b-
+
+      - name: Show cache hit/miss result
+        run: |
+          echo "Cache hit/miss: ${{ steps.cache.outputs.cache-hit }}"
+
       - name: Run a simple command
         run: |
           echo "Current date:"
           date
-          echo "This is a basic GitHub Actions demo."
+          echo "This is a basic GitHub Actions demo with caching."
